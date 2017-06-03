@@ -5,7 +5,7 @@
 
     </uses-permission>
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-
+<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"></uses-permission>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -26,7 +26,8 @@
                 <action android:name="com.example.myapplication.ACTION_TRIGGER_ALARM" />
             </intent-filter>
         </service>
-        <receiver android:name=".MyBroadCastReceiver">
+        <receiver android:name=".MyBroadCastReceiver"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>

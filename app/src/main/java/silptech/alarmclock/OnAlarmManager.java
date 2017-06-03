@@ -24,23 +24,23 @@ import static android.os.SystemClock.elapsedRealtime;
  * Created by abhi on 6/3/2017.
  */
 
-public class OnAlarmManager extends IntentService {
+public class OnAlarmManager extends Service {
 
-    public static final String ACTION_TRIGGER_ALARM = "com.example.myapplication.ACTION_TRIGGER_ALARM";
+
 
     private static final String TAG = "OnAlarmReceiver";
 
     private NotificationManager nm;
 
 
-    public OnAlarmManager() {
-        super("OnAlarmManager");
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
     }
 
-
-
     @Override
-    protected void onHandleIntent(@Nullable Intent intent) {
+    public int onStartCommand(Intent intent, int flags, int startId) {
         nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         Intent mainActivityIntent = new Intent(this, MainActivity.class);
         PendingIntent pIntent = PendingIntent.getActivity(this, 0, mainActivityIntent, 0);
@@ -59,46 +59,6 @@ public class OnAlarmManager extends IntentService {
         notification.defaults |= Notification.DEFAULT_LIGHTS;
         nm.notify(0, notification);
         Log.i(TAG, "Alarm has begun");
+        return super.onStartCommand(intent, flags, startId);
     }
-
-//    @Nullable
-//    @Override
-//    public IBinder onBind(Intent intent) {
-//        return null;
-//    }
-//
-//    @Override
-//    public int onStartCommand(Intent intent, int flags, int startId) {
-//        Bundle bundle = intent.getExtras();
-//        if (bundle != null) {
-//         user=bundle.getString("alarm");
-//          }
-//        nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-//        Intent mainActivityIntent = new Intent(this, MainActivity.class);
-//        PendingIntent pIntent = PendingIntent.getActivity(this, 0, mainActivityIntent, 0);
-//
-//        //setting up notification
-//        Notification notification = new NotificationCompat.Builder(this)
-//                .setContentTitle("New Notification")
-//                .setContentText(user)
-//                .setSmallIcon(R.mipmap.ic_launcher)
-//                .setContentIntent(pIntent)
-//                .build();
-//        notification.flags |= Notification.FLAG_AUTO_CANCEL;
-//        notification.flags |= Notification.FLAG_SHOW_LIGHTS;
-//        notification.defaults |= Notification.DEFAULT_SOUND;
-//        notification.defaults |= Notification.DEFAULT_VIBRATE;
-//        notification.defaults |= Notification.DEFAULT_LIGHTS;
-//        nm.notify(0, notification);
-//        Toast.makeText(getApplicationContext(), "Alarm has begun", Toast.LENGTH_LONG).show();
-//        Log.i(TAG, "Alarm has begun");
-//         return START_NOT_STICKY;
-//    }
-//
-//    @Override
-//    public void onDestroy() {
-//        super.onDestroy();
-//
-//    }
-
 }
